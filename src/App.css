@@ -56,7 +56,6 @@
   font-size: 40px;
   color: #000000;
 }
-
 #searchbar {
   outline: none;
   border: none;
@@ -76,11 +75,25 @@
   justify-items: center;
   align-items: center;
   gap: 3px;
+  cursor: pointer;
+}
+.buttons.active {
+  background-color: #4c4d4c; 
+  border: 2px solid #474747;
+  color: white;
+}
+.buttons:hover{
+  background-color: #c2b4b4;
+  border: 2px solid #c2b4b4;;
+}
+#allexpense{
+  display: flex;
+  justify-content: center;
 }
 
 
 .dynamicbuttons {
-  /* text-align: center; */
+
   border-radius: 10px;
   background-color: #5C6AFF;
   border: #5C6AFF solid 2px;
@@ -258,4 +271,36 @@
   padding-right: 12px;
   padding-top: 10px;
   cursor: pointer;
+}
+.delete-popup{
+  background-color: #ffffff;
+  box-shadow: 4px 20px 40px 0px #1C1C1E1A;
+  height: 200px;
+  width: 200px;
+  border-radius: 10px;
+  position:fixed;
+  z-index: 2;
+  top: 60%;
+  left: 40%;
+
+}
+.delete-popup>p{
+  font-size: 20px;
+  font-family: Arimo;
+  text-align: center;
+  padding: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.delete-popup>button{
+  margin: 15px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #5C6AFF;
+  border: #5C6AFF solid 2px;
+  padding: 5px 20px;
+  font-size: 17px;
+  color: white;
+  font-family: arimo;
+  font-weight: 700;
 }

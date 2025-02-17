@@ -10,8 +10,6 @@ const Toggle = ({ budgetToggle, setTotalBudget, setBudgetToggle }) => {
         if (!budget) {
             alert("Enter a Amount")
         }
-
-      
         setTotalBudget(budget);
         setBudgetToggle(false)
     }

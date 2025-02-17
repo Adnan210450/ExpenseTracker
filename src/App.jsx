@@ -12,6 +12,7 @@ import TableEdit from "./TableEdit";
 import { useEffect, useState } from "react";
 import Barchart from "./Barchart.Jsx";
 import DoughnutChart from "./components/DoughnutChart";
+import DeleteToggle from "./components/DeleteToggle";
 
 function App() {
   const [totalBudget, setTotalBudget] = useState(0);
@@ -20,6 +21,8 @@ function App() {
   const [filterCategory, setFilteredCategory] = useState("All");
   const [editExpense, setEditExpense] = useState(false);
   const [searchData, setSearchData] = useState("");
+  const [deleteToggle, setDeleteToggle] = useState(false);
+  const [deleteData,setDeleteData]=useState(null)
 
   const handleSearch = (query) => {
     setSearchData(query.toLowerCase());
@@ -36,6 +39,7 @@ function App() {
       ? expenses
       : expenses.filter((expense) => expense.category === filterCategory);
 
+      
   const searchFilteredExpenses = filterExpense.filter((expense) =>
     expense.expenseName.toLowerCase().includes(searchData)
   );
@@ -59,7 +63,7 @@ function App() {
   const handleExpenses = (expense) => {
     setExpenses((prevExpenses) => [...prevExpenses, expense]);
   };
-  console.log({ expenses })
+  console.log({ expenses });
 
   useEffect(() => {
     const totalAmount = expenses.reduce(
@@ -71,9 +75,9 @@ function App() {
 
   const handleDelete = (id) => {
     console.log("first", id);
-    const filteredData = expenses.filter((expense) => expense.id !== id);
-    console.log(filteredData, "delete data");
-    setExpenses(filteredData);
+    const delteData = expenses.filter((expense) => expense.id !== id);
+    console.log(delteData, "delete data");
+    setExpenses(delteData);
   };
 
   return (
@@ -95,24 +99,52 @@ function App() {
         handleExpenses={handleExpenses}
         handleCategoryFilter={handleCategoryFilter}
       />
+      {expenses.length > 0 ? (
+        <>
+          <div style={{ display: "flex", marginTop: "50px" }}>
+            <DoughnutChart expense={searchFilteredExpenses} />
+            <Barchart expense={searchFilteredExpenses} />
+          </div>
 
-      <div style={{ display: "flex", marginTop: "50px" }}>
-        <DoughnutChart expense={searchFilteredExpenses} />
-        <Barchart expense={searchFilteredExpenses}/>
-      </div>
-
-      <Table
-        expense={searchFilteredExpenses}
-        deleteTask={handleDelete}
-        editTable={editTable}
-      />
-      <TableEdit
-        editExpense={editExpense}
-        expenseClose={expenseClose}
-        selectedExpense={editdata}
-        setExpenses={setExpenses}
-        expenses={expenses}
-      />
+          <Table
+            expense={searchFilteredExpenses}
+            deleteTask={handleDelete}
+            editTable={editTable}
+            expenses={expenses}
+            setDeleteToggle={setDeleteToggle}
+            setDeleteData={setDeleteData}
+          />
+          <TableEdit
+            editExpense={editExpense}
+            expenseClose={expenseClose}
+            selectedExpense={editdata}
+            setExpenses={setExpenses}
+            expenses={expenses}
+            setDeleteData={setDeleteData}
+          />
+        </>
+      ) : (
+        <p
+          style={{
+            fontFamily: "arial",
+            textAlign: "center",
+            fontSize: "30px",
+            color: "red",
+            fontWeight: "Bold",
+            marginTop: "25px",
+          }}
+        >
+          No Expenses!!
+        </p>
+      )}
+      {deleteToggle && (
+        <DeleteToggle
+          deleteToggle={deleteToggle}
+          handleDelete={handleDelete}
+          setDeleteToggle={setDeleteToggle}
+          selectedExpense={deleteData}
+        />
+      )}
     </>
   );
 }

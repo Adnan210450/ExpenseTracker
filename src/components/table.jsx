@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 
-const Table = ({ expense, deleteTask, editTable }) => {
+const Table = ({ expense, editTable ,expenses,setDeleteToggle,setDeleteData}) => {
   // console.log(expense);
+
+  const handleDelete = (expense) => {
+    console.log(setDeleteData(expense),"1111111111")//SLECTED DATA IS UNDEFINED
+    setDeleteToggle(true)
+  }
 
   return (
     <>
+    {
+      expenses?
       <div className="table-container">
         <table style={{ width: "100vw" }}>
           <thead id="tablehead">
@@ -34,9 +41,9 @@ const Table = ({ expense, deleteTask, editTable }) => {
                       </button>
                       <button
                         className="buttonedit"
-                        onClick={() => deleteTask(item.id)}
+                        onClick={()=>handleDelete(item)}
                       >
-                        delete
+                        delete            
                       </button>
                     </div>
                   </td>
@@ -45,7 +52,10 @@ const Table = ({ expense, deleteTask, editTable }) => {
             })}
           </tbody>
         </table>
-      </div>
+      </div>:""
+    }
+      
+      
     </>
   );
 };
